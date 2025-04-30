@@ -4,7 +4,7 @@
 
 package com.mycompany.stock.system.frontadmin;
 
-import com.mycompany.stock.system.frontadmin.igu.LoginFrame;
+import com.mycompany.stock.system.frontadmin.igu.AdminFrame;
 
 /**
  *
@@ -15,7 +15,7 @@ public class StockSystemFrontAdmin {
     public static void main(String[] args) {
           java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginFrame().setVisible(true);
+                new AdminFrame().setVisible(true);
             }
         });
     }
