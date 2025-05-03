@@ -1,8 +1,14 @@
 com\mycompany\stock\system\frontadmin\igu\LoginFrame.class
-com\mycompany\stock\system\frontadmin\igu\AdminFrame$3.class
+com\mycompany\stock\system\frontadmin\api\ApiClient.class
 com\mycompany\stock\system\frontadmin\igu\AdminFrame.class
-com\mycompany\stock\system\frontadmin\igu\AdminFrame$1.class
+com\mycompany\stock\system\frontadmin\api\ApiClientFuncional.class
 com\mycompany\stock\system\frontadmin\igu\LoginFrame$1.class
 com\mycompany\stock\system\frontadmin\StockSystemFrontAdmin$1.class
 com\mycompany\stock\system\frontadmin\igu\AdminFrame$2.class
+com\mycompany\stock\system\frontadmin\api\ApiClientPost.class
+com\mycompany\stock\system\frontadmin\igu\AdminFrame$3.class
+com\mycompany\stock\system\frontadmin\model\Product.class
+com\mycompany\stock\system\frontadmin\igu\AdminFrame$1.class
+com\mycompany\stock\system\frontadmin\igu\AdminFrame$4.class
+com\mycompany\stock\system\frontadmin\igu\AdminFrame$5.class
 com\mycompany\stock\system\frontadmin\StockSystemFrontAdmin.class
