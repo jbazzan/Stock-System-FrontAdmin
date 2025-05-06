@@ -1,5 +1,7 @@
 package com.mycompany.stock.system.frontadmin.igu;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mycompany.stock.system.frontadmin.api.ApiClient;
 import com.mycompany.stock.system.frontadmin.api.ApiClientDelete;
@@ -7,6 +9,7 @@ import com.mycompany.stock.system.frontadmin.api.ApiClientGet;
 import com.mycompany.stock.system.frontadmin.api.ApiClientPost;
 import com.mycompany.stock.system.frontadmin.api.ApiClientPut;
 import com.mycompany.stock.system.frontadmin.model.Product;
+import com.mycompany.stock.system.frontadmin.model.Sale;
 import com.mycompany.stock.system.frontadmin.model.User;
 import java.awt.CardLayout;
 import java.util.List;
@@ -27,6 +30,7 @@ public class AdminFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         loadProductsIntoTable(viewProducts);
         loadUsersIntoTable(viewUsers);
+        loadSalesIntoTable(viewSales);
     }
 
     @SuppressWarnings("unchecked")
@@ -68,11 +72,10 @@ public class AdminFrame extends javax.swing.JFrame {
         btnDeleteUsers = new javax.swing.JButton();
         panelSales = new javax.swing.JPanel();
         jSeparator19 = new javax.swing.JSeparator();
-        jButton13 = new javax.swing.JButton();
-        jSeparator20 = new javax.swing.JSeparator();
-        jButton14 = new javax.swing.JButton();
+        btnShowSales = new javax.swing.JButton();
         jSeparator21 = new javax.swing.JSeparator();
-        jButton15 = new javax.swing.JButton();
+        btnSalesByClient = new javax.swing.JButton();
+        jSeparator22 = new javax.swing.JSeparator();
         panelContent = new javax.swing.JPanel();
         productManagment = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -154,15 +157,25 @@ public class AdminFrame extends javax.swing.JFrame {
         btnSearchUpdateUser = new javax.swing.JButton();
         formDeleteUser = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
-        txtDeleteUser = new javax.swing.JTextField();
+        txtDeleteUserId = new javax.swing.JTextField();
         btnDeleteUser = new javax.swing.JButton();
+        saleHistory = new javax.swing.JPanel();
+        jLabel31 = new javax.swing.JLabel();
+        formShowSales = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        viewSales = new javax.swing.JTable();
+        btnRefresh = new javax.swing.JButton();
+        formShowSalesByClient = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        viewSalesByClient = new javax.swing.JTable();
+        btnSearchByClient = new javax.swing.JButton();
+        jLabel32 = new javax.swing.JLabel();
+        txtSearchSaleByClient = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 400));
         setMinimumSize(new java.awt.Dimension(800, 400));
-        setPreferredSize(new java.awt.Dimension(800, 400));
         getContentPane().setLayout(new java.awt.CardLayout());
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -375,37 +388,42 @@ public class AdminFrame extends javax.swing.JFrame {
 
         panelSales.setLayout(new javax.swing.BoxLayout(panelSales, javax.swing.BoxLayout.X_AXIS));
 
-        jSeparator19.setMaximumSize(new java.awt.Dimension(85, 10));
-        jSeparator19.setPreferredSize(new java.awt.Dimension(65, 10));
+        jSeparator19.setMaximumSize(new java.awt.Dimension(100, 10));
+        jSeparator19.setMinimumSize(new java.awt.Dimension(100, 10));
+        jSeparator19.setPreferredSize(new java.awt.Dimension(100, 10));
         panelSales.add(jSeparator19);
 
-        jButton13.setText("All Sales");
-        jButton13.setMaximumSize(new java.awt.Dimension(130, 23));
-        jButton13.setMinimumSize(new java.awt.Dimension(130, 23));
-        jButton13.setPreferredSize(new java.awt.Dimension(130, 23));
-        panelSales.add(jButton13);
+        btnShowSales.setText("All Sales");
+        btnShowSales.setMaximumSize(new java.awt.Dimension(130, 23));
+        btnShowSales.setMinimumSize(new java.awt.Dimension(130, 23));
+        btnShowSales.setPreferredSize(new java.awt.Dimension(130, 23));
+        btnShowSales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowSalesActionPerformed(evt);
+            }
+        });
+        panelSales.add(btnShowSales);
 
-        jSeparator20.setMaximumSize(new java.awt.Dimension(25, 10));
-        jSeparator20.setMinimumSize(new java.awt.Dimension(25, 10));
-        jSeparator20.setPreferredSize(new java.awt.Dimension(25, 10));
-        panelSales.add(jSeparator20);
-
-        jButton14.setText("Sales by User");
-        jButton14.setMaximumSize(new java.awt.Dimension(130, 23));
-        jButton14.setMinimumSize(new java.awt.Dimension(130, 23));
-        jButton14.setPreferredSize(new java.awt.Dimension(130, 23));
-        panelSales.add(jButton14);
-
-        jSeparator21.setMaximumSize(new java.awt.Dimension(25, 10));
-        jSeparator21.setMinimumSize(new java.awt.Dimension(25, 10));
-        jSeparator21.setPreferredSize(new java.awt.Dimension(25, 10));
+        jSeparator21.setMaximumSize(new java.awt.Dimension(100, 10));
+        jSeparator21.setMinimumSize(new java.awt.Dimension(100, 10));
+        jSeparator21.setPreferredSize(new java.awt.Dimension(100, 10));
         panelSales.add(jSeparator21);
 
-        jButton15.setText("Sales by Products");
-        jButton15.setMaximumSize(new java.awt.Dimension(130, 23));
-        jButton15.setMinimumSize(new java.awt.Dimension(130, 23));
-        jButton15.setPreferredSize(new java.awt.Dimension(130, 23));
-        panelSales.add(jButton15);
+        btnSalesByClient.setText("Sales by Client");
+        btnSalesByClient.setMaximumSize(new java.awt.Dimension(130, 23));
+        btnSalesByClient.setMinimumSize(new java.awt.Dimension(130, 23));
+        btnSalesByClient.setPreferredSize(new java.awt.Dimension(130, 23));
+        btnSalesByClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalesByClientActionPerformed(evt);
+            }
+        });
+        panelSales.add(btnSalesByClient);
+
+        jSeparator22.setMaximumSize(new java.awt.Dimension(100, 10));
+        jSeparator22.setMinimumSize(new java.awt.Dimension(100, 10));
+        jSeparator22.setPreferredSize(new java.awt.Dimension(100, 10));
+        panelSales.add(jSeparator22);
 
         panelFunctions.add(panelSales, "sales");
 
@@ -541,10 +559,6 @@ public class AdminFrame extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(viewProducts);
-        if (viewProducts.getColumnModel().getColumnCount() > 0) {
-            viewProducts.getColumnModel().getColumn(4).setResizable(false);
-            viewProducts.getColumnModel().getColumn(4).setHeaderValue("Stock");
-        }
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("ID");
@@ -849,10 +863,11 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addComponent(jLabel20)
                 .addGap(1, 1, 1)
-                .addGroup(formAddUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmailUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel21))
+                .addGroup(formAddUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel21)
+                    .addGroup(formAddUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtEmailUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14)))
                 .addGap(18, 18, 18)
                 .addGroup(formAddUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1064,6 +1079,11 @@ public class AdminFrame extends javax.swing.JFrame {
         jLabel30.setText("ID");
 
         btnDeleteUser.setText("Delete");
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout formDeleteUserLayout = new javax.swing.GroupLayout(formDeleteUser);
         formDeleteUser.setLayout(formDeleteUserLayout);
@@ -1073,7 +1093,7 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addGap(126, 126, 126)
                 .addComponent(jLabel30)
                 .addGap(18, 18, 18)
-                .addComponent(txtDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDeleteUserId, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDeleteUser)
                 .addContainerGap(233, Short.MAX_VALUE))
@@ -1084,12 +1104,132 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(formDeleteUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
-                    .addComponent(txtDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDeleteUserId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteUser))
                 .addContainerGap(332, Short.MAX_VALUE))
         );
 
         panelContent.add(formDeleteUser, "deleteUsers");
+
+        jLabel31.setText("WELCOME TO SALES HISTORY");
+
+        javax.swing.GroupLayout saleHistoryLayout = new javax.swing.GroupLayout(saleHistory);
+        saleHistory.setLayout(saleHistoryLayout);
+        saleHistoryLayout.setHorizontalGroup(
+            saleHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saleHistoryLayout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addComponent(jLabel31)
+                .addContainerGap(280, Short.MAX_VALUE))
+        );
+        saleHistoryLayout.setVerticalGroup(
+            saleHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saleHistoryLayout.createSequentialGroup()
+                .addGap(108, 108, 108)
+                .addComponent(jLabel31)
+                .addContainerGap(278, Short.MAX_VALUE))
+        );
+
+        panelContent.add(saleHistory, "saleHistory");
+
+        viewSales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "id", "client_id", "date", "total", "discount_id", "subtotal"
+            }
+        ));
+        jScrollPane5.setViewportView(viewSales);
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout formShowSalesLayout = new javax.swing.GroupLayout(formShowSales);
+        formShowSales.setLayout(formShowSalesLayout);
+        formShowSalesLayout.setHorizontalGroup(
+            formShowSalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formShowSalesLayout.createSequentialGroup()
+                .addGroup(formShowSalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(formShowSalesLayout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(formShowSalesLayout.createSequentialGroup()
+                        .addGap(233, 233, 233)
+                        .addComponent(btnRefresh)))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+        formShowSalesLayout.setVerticalGroup(
+            formShowSalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formShowSalesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnRefresh)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(162, Short.MAX_VALUE))
+        );
+
+        panelContent.add(formShowSales, "showSales");
+
+        viewSalesByClient.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "id", "client_id", "date", "total", "discount_id", "subtotal"
+            }
+        ));
+        jScrollPane6.setViewportView(viewSalesByClient);
+
+        btnSearchByClient.setText("Search");
+        btnSearchByClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchByClientActionPerformed(evt);
+            }
+        });
+
+        jLabel32.setText("ID Client");
+
+        javax.swing.GroupLayout formShowSalesByClientLayout = new javax.swing.GroupLayout(formShowSalesByClient);
+        formShowSalesByClient.setLayout(formShowSalesByClientLayout);
+        formShowSalesByClientLayout.setHorizontalGroup(
+            formShowSalesByClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formShowSalesByClientLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(formShowSalesByClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(formShowSalesByClientLayout.createSequentialGroup()
+                        .addComponent(jLabel32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSearchSaleByClient, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSearchByClient)))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+        formShowSalesByClientLayout.setVerticalGroup(
+            formShowSalesByClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(formShowSalesByClientLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(formShowSalesByClientLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSearchByClient)
+                    .addComponent(jLabel32)
+                    .addComponent(txtSearchSaleByClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(162, Short.MAX_VALUE))
+        );
+
+        panelContent.add(formShowSalesByClient, "showSalesByClient");
 
         jPanel3.add(panelContent, java.awt.BorderLayout.CENTER);
 
@@ -1117,8 +1257,10 @@ public class AdminFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUsersActionPerformed
 
     private void btnSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalesActionPerformed
-        CardLayout cl = (CardLayout) (panelFunctions.getLayout());
-        cl.show(panelFunctions, "sales");
+        CardLayout clF = (CardLayout) (panelFunctions.getLayout());
+        clF.show(panelFunctions, "sales");
+        CardLayout clC = (CardLayout) (panelContent.getLayout());
+        clC.show(panelContent, "saleHistory");
     }//GEN-LAST:event_btnSalesActionPerformed
 
     /* Seccion de productos */
@@ -1290,7 +1432,7 @@ public class AdminFrame extends javax.swing.JFrame {
             int responseCode = ApiClientDelete.delete("/products/" + id);
 
             if (responseCode >= 200 && responseCode < 300) {
-                JOptionPane.showMessageDialog(this, "Product updated successfully.");
+                JOptionPane.showMessageDialog(this, "Product delete successfully.");
                 txtDeleteProductId.setText("");
             }
         } catch (IOException e) {
@@ -1443,10 +1585,92 @@ public class AdminFrame extends javax.swing.JFrame {
         txtRoleUserUpdate.setText("");
     }//GEN-LAST:event_btnCleanFormUserUpdateActionPerformed
 
+    /* Borrar Usuario */
+
     private void btnDeleteUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUsersActionPerformed
         CardLayout cl = (CardLayout) (panelContent.getLayout());
         cl.show(panelContent, "deleteUsers");
     }//GEN-LAST:event_btnDeleteUsersActionPerformed
+
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+        try {
+            String idTexto = txtDeleteUserId.getText();
+
+            if (idTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please, enter the ID of the user to be removed.");
+                return;
+            }
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure about removing this user?", "Confirm removal", JOptionPane.YES_NO_OPTION);
+
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            int id = Integer.parseInt(idTexto);
+            int responseCode = ApiClientDelete.delete("/users/" + id);
+
+            if (responseCode >= 200 && responseCode < 300) {
+                JOptionPane.showMessageDialog(this, "User delete successfully.");
+                txtDeleteProductId.setText("");
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void btnShowSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowSalesActionPerformed
+        CardLayout cl = (CardLayout) (panelContent.getLayout());
+        cl.show(panelContent, "showSales");
+    }//GEN-LAST:event_btnShowSalesActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        loadSalesIntoTable(viewSales);
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnSalesByClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalesByClientActionPerformed
+        CardLayout cl = (CardLayout) (panelContent.getLayout());
+        cl.show(panelContent, "showSalesByClient");
+    }//GEN-LAST:event_btnSalesByClientActionPerformed
+
+    private void btnSearchByClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchByClientActionPerformed
+        try {
+            String idTexto = txtSearchSaleByClient.getText();
+            if (idTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please, enter the ID of the client.");
+                return;
+            }
+
+            int id = Integer.parseInt(idTexto);
+
+            JsonObject response = ApiClientGet.get("/sales/by-client/" + id);
+            JsonArray salesArray = response.getAsJsonArray("data");
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.setColumnIdentifiers(new String[]{"id", "client_id", "date", "total", "discount_id", "subtotal"});
+
+            for (JsonElement element : salesArray) {
+                Sale sale = ApiClient.gson.fromJson(element, Sale.class);
+
+                model.addRow(new Object[]{
+                    sale.getId(),
+                    sale.getClient_id(),
+                    sale.getDate(),
+                    sale.getTotal(),
+                    sale.getDiscount_id(),
+                    sale.getSubtotal()
+                });
+            }
+
+            viewSalesByClient.setModel(model);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "The ID must be a number.");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Failed to find the user: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnSearchByClientActionPerformed
 
     /* Muestra todos los productos en una tabla */
     private void loadProductsIntoTable(JTable table) {
@@ -1478,6 +1702,7 @@ public class AdminFrame extends javax.swing.JFrame {
         }
     }
 
+    /* Muestra todos los usuarios en una tabla */
     private void loadUsersIntoTable(JTable table) {
         apiClientGet = new ApiClientGet();
         try {
@@ -1502,6 +1727,37 @@ public class AdminFrame extends javax.swing.JFrame {
             viewUsers.setModel(model);
 
         } catch (IOException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar usuarios: " + e.getMessage());
+        }
+    }
+
+    /* Muestra todas las ventas en una tabla */
+    private void loadSalesIntoTable(JTable table) {
+        apiClientGet = new ApiClientGet();
+        try {
+            com.google.gson.JsonObject response = ApiClientGet.get("/sales");
+            com.google.gson.JsonArray usersArray = response.getAsJsonArray("data");
+            java.lang.reflect.Type listType = new com.google.gson.reflect.TypeToken<List<Sale>>() {
+            }.getType();
+            List<Sale> sales = ApiClient.gson.fromJson(usersArray, listType);
+
+            DefaultTableModel model = new DefaultTableModel();
+            model.setColumnIdentifiers(new String[]{"id", "client_id", "date", "total", "discount_id", "subtotal"});
+
+            for (Sale s : sales) {
+                model.addRow(new Object[]{
+                    s.getId(),
+                    s.getClient_id(),
+                    s.getDate(),
+                    s.getTotal(),
+                    s.getDiscount_id(),
+                    s.getSubtotal()
+                });
+            }
+
+            viewSales.setModel(model);
+
+        } catch (IOException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar productos: " + e.getMessage());
         }
     }
@@ -1520,14 +1776,18 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnFormAddUsers;
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnProducts;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSales;
+    private javax.swing.JButton btnSalesByClient;
     private javax.swing.JButton btnSaveProduct;
     private javax.swing.JButton btnSaveUser;
+    private javax.swing.JButton btnSearchByClient;
     private javax.swing.JButton btnSearchProduct;
     private javax.swing.JButton btnSearchUpdateUser;
     private javax.swing.JButton btnSearchUser;
     private javax.swing.JButton btnSelectProductUpdate;
     private javax.swing.JButton btnShowProductPanel;
+    private javax.swing.JButton btnShowSales;
     private javax.swing.JButton btnShowUsers;
     private javax.swing.JButton btnUpdateProductPanel;
     private javax.swing.JButton btnUpdateProducts;
@@ -1541,12 +1801,11 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JPanel formDeleteProduct;
     private javax.swing.JPanel formDeleteUser;
     private javax.swing.JPanel formShowProduct;
+    private javax.swing.JPanel formShowSales;
+    private javax.swing.JPanel formShowSalesByClient;
     private javax.swing.JPanel formShowUser;
     private javax.swing.JPanel formUpdateProducts;
     private javax.swing.JPanel formUpdateUser;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1571,6 +1830,8 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1584,6 +1845,8 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
@@ -1595,8 +1858,8 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator18;
     private javax.swing.JSeparator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator20;
     private javax.swing.JSeparator jSeparator21;
+    private javax.swing.JSeparator jSeparator22;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
@@ -1608,8 +1871,9 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JPanel panelUsers;
     private javax.swing.JPanel productManagment;
     private javax.swing.JPanel productManagment1;
+    private javax.swing.JPanel saleHistory;
     private javax.swing.JTextField txtDeleteProductId;
-    private javax.swing.JTextField txtDeleteUser;
+    private javax.swing.JTextField txtDeleteUserId;
     private javax.swing.JTextField txtDescriptionProduct;
     private javax.swing.JTextField txtDescriptionUpdateProduct;
     private javax.swing.JTextField txtEmailUser;
@@ -1625,11 +1889,14 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtRoleUser;
     private javax.swing.JTextField txtRoleUserUpdate;
     private javax.swing.JTextPane txtSearchProductId;
+    private javax.swing.JTextField txtSearchSaleByClient;
     private javax.swing.JTextPane txtSearchUserId;
     private javax.swing.JTextField txtStockProduct;
     private javax.swing.JTextField txtStockUpdateProduct;
     private javax.swing.JTextField txtUpdateUserId;
     private javax.swing.JTable viewProducts;
+    private javax.swing.JTable viewSales;
+    private javax.swing.JTable viewSalesByClient;
     private javax.swing.JTable viewUsers;
     // End of variables declaration//GEN-END:variables
 }
