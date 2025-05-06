@@ -2,6 +2,7 @@ package com.mycompany.stock.system.frontadmin.model;
 
 public class Product {
     
+    private int id;
     private String name;
     private String description;
     private double price;
@@ -17,6 +18,13 @@ public class Product {
     public Product() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
     public String getName() {
         return name;
@@ -42,7 +50,7 @@ public class Product {
         this.price = price;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 

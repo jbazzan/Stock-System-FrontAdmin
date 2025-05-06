@@ -8,47 +8,41 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
-public class ApiClientPost extends ApiClient {
-    
-    public static JsonObject post(String endpoint, Object data) throws IOException
-    {
+public class ApiClientPut extends ApiClient{
+    public static JsonObject put(String endpoint, Object data) throws IOException {
         URL url = new URL(BASE_URL + endpoint);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        conn.setRequestMethod("POST");
+        conn.setRequestMethod("PUT");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
 
         String json = gson.toJson(data);
         try (OutputStream os = conn.getOutputStream()) {
-            os.write(json.getBytes(StandardCharsets.UTF_8));
+            os.write(json.getBytes("utf-8"));
         }
         
         System.out.println("data send: " + data);
-        
+
         return readResponse(conn);
     }
-    
-    private static JsonObject readResponse(HttpURLConnection conn) throws IOException
-    {
+
+    private static JsonObject readResponse(HttpURLConnection conn) throws IOException {
         int responseCode = conn.getResponseCode();
         InputStream responseStream = (responseCode >= 200 && responseCode < 300)
                 ? conn.getInputStream()
                 : conn.getErrorStream();
-        
-        try(BufferedReader in = new BufferedReader(new InputStreamReader(responseStream)))
-        {
+
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(responseStream))) {
             StringBuilder response = new StringBuilder();
             String line;
-            while ((line = in.readLine()) != null)
-            {
+            while ((line = in.readLine()) != null) {
                 response.append(line);
             }
             
             System.out.println("Response: " + response);
-            
+
             return gson.fromJson(response.toString(), JsonObject.class);
         }
     }
