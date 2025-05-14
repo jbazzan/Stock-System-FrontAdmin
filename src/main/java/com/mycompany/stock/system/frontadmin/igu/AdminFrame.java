@@ -246,6 +246,11 @@ public class AdminFrame extends javax.swing.JFrame {
         btnLogOut.setMaximumSize(new java.awt.Dimension(150, 50));
         btnLogOut.setMinimumSize(new java.awt.Dimension(150, 50));
         btnLogOut.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogOutActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnLogOut);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -1671,6 +1676,20 @@ public class AdminFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnSearchByClientActionPerformed
+
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+        try {
+            ApiClientPost.post("/logout", null);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        LoginFrame.authToken=null;
+        
+        LoginFrame login = new LoginFrame();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLogOutActionPerformed
 
     /* Muestra todos los productos en una tabla */
     private void loadProductsIntoTable(JTable table) {

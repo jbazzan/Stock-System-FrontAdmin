@@ -1,6 +1,7 @@
 package com.mycompany.stock.system.frontadmin.api;
 
 import com.google.gson.JsonObject;
+import com.mycompany.stock.system.frontadmin.igu.LoginFrame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,11 @@ public class ApiClientPost extends ApiClient {
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
+        
+        String token = LoginFrame.authToken;
+        if (token != null && !token.isEmpty()) {
+            conn.setRequestProperty("Authorization", "Bearer " + token);
+        }
 
         String json = gson.toJson(data);
         try (OutputStream os = conn.getOutputStream()) {

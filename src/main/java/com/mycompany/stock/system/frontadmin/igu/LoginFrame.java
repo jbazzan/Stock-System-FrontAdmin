@@ -3,11 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.stock.system.frontadmin.igu;
+import com.google.gson.JsonObject;
+import com.mycompany.stock.system.frontadmin.api.ApiClientPost;
+import com.mycompany.stock.system.frontadmin.model.User;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
 public class LoginFrame extends javax.swing.JFrame {
-
+    
+    public static String authToken;
+    private ApiClientPost apiClientPost;
 
     public LoginFrame() {
         initComponents();
@@ -126,15 +134,34 @@ public class LoginFrame extends javax.swing.JFrame {
         
             String user = txtUser.getText();
             String pass = txtPass.getText();
+        try {
             autenticador(user, pass);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btnLoginActionPerformed
     
-    private void autenticador(String user, String pass)
+    private void autenticador(String user, String pass) throws IOException
         {
-            if(user.equals("admin") && pass.equals("admin"))
+            User u = new User();
+            u.setEmail(user);
+            u.setPassword(pass);
+            
+            JsonObject response = ApiClientPost.post("/login", u);
+            
+            if(response != null && response.has("token"))
             {
+                String token = response.get("token").getAsString();
+                
+                LoginFrame.authToken = token;
+                
                 JOptionPane.showMessageDialog(LoginFrame.this, "Inicio de sesión correcto");
+                
+                AdminFrame adminFrame = new AdminFrame();
+                adminFrame.setVisible(true);
+                this.dispose();
+            
             }
             else
             {

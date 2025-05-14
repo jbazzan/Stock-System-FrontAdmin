@@ -1,5 +1,6 @@
 package com.mycompany.stock.system.frontadmin.api;
 
+import com.mycompany.stock.system.frontadmin.igu.LoginFrame;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,6 +11,11 @@ public class ApiClientDelete extends ApiClient{
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         conn.setRequestMethod("DELETE");
+        
+        String token = LoginFrame.authToken;
+        if (token != null && !token.isEmpty()) {
+            conn.setRequestProperty("Authorization", "Bearer " + token);
+        }
         
         System.out.println(conn.getResponseCode());
 
